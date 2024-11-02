@@ -61,7 +61,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 print('Training Model...\n')
 # Train the model using the Mushroom_classifier Neural Network: 
-num_epochs = 10
+num_epochs = 20
 for epoch in range(num_epochs):
     model.train()
     running_loss = 0.0
@@ -90,7 +90,7 @@ for epoch in range(num_epochs):
 
 print('Finished Training. Saving Model...\n')
 # Save the model:
-torch.save(model.state_dict(), 'mushroom_classfier.pth')
+torch.save(model.state_dict(), 'mushroom_classfier1.pth')
 
 
 print('Model Saved. Thank you!')
