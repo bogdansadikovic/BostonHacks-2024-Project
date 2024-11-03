@@ -17,6 +17,11 @@ print('Transforming Data...\n')
 transform = transforms.Compose([
     transforms.Resize((224, 224)),  # Resize images to a common size
     transforms.ToTensor()
+    # transforms.Resize((224, 224)),  
+    # transforms.RandomHorizontalFlip(),  # Randomly flip images horizontally
+    # transforms.RandomRotation(15),      # Rotate images by up to 15 degrees
+    # transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),
+    # transforms.ToTensor(),
 ])
 
 print('Loading Dataset...\n')
@@ -35,14 +40,31 @@ class MushroomClassfier(nn.Module):
     def __init__(self):
         super(MushroomClassfier, self).__init__()
         self.conv_layers = nn.Sequential(
-            nn.Conv2d(3, 16, kernel_size=3, padding=1),
+            nn.Conv2d(3, 32, kernel_size=3, padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2, 2),
+
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+
+            nn.Conv2d(128, 256, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),
+
+            nn.Dropout(0.5),
         )
         self.fc_layers = nn.Sequential(
-            nn.Linear(16 * 112 * 112, 128),
+            nn.Linear(256 * 14 * 14, 512),
             nn.ReLU(),
-            nn.Linear(128, 2)
+            nn.Dropout(0.5),  
+            nn.Linear(512, 128),
+            nn.ReLU(),
+            nn.Linear(128, 2)  
         )
 
     def forward(self, x):
@@ -61,7 +83,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 
 print('Training Model...\n')
 # Train the model using the Mushroom_classifier Neural Network: 
-num_epochs = 20
+num_epochs = 10
 for epoch in range(num_epochs):
     model.train()
     running_loss = 0.0
