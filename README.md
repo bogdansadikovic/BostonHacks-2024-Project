@@ -26,3 +26,6 @@ User database and storage was mainly handled through MongoDB. To ensure that the
 Streamlit:
 
 We built a localhost website on Streamlit to further show the model's use cases, but were unable to develop the website into a website that can be used online, as the model's size was too large to place into a Github Repository normally, and we ran out of time. 
+
+
+![image](https://github.com/user-attachments/assets/ef5489ca-26a8-4a8b-be58-cc0867485526)
